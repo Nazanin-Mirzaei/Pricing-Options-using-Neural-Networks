@@ -111,13 +111,12 @@ We compare the actual values and predicted values to calculate the accuracy of a
 There are different model evaluation metrics:
 
 *   MAE: stands for Mean Absolute Error, which is another commonly used loss function in machine learning. It measures the average absolute difference between the predicted values and the true values.  The goal is to minimize the MAE in order to make better predictions. The MAE is more robust to outliers than the MSE, which tends to be sensitive to outliers.
-$$ \begin{align}{MAE} = \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}}-1} \left| y_i - \hat{y}_i \right|.\end{align}$$
+
 
 *   MSE: stands for Mean Squared Error, which is a commonly used loss function for regression problems in machine learning. It measures the average squared difference between the predicted values and the true values. The goal is to minimize the MSE in order to make better predictions.
-$$ \begin{align} {MSE} = \frac{1}{n_\text{samples}} \sum_{i=0}^{n_\text{samples} - 1} (y_i - \hat{y}_i)^2.\end{align} $$
+
 
 *   R2-squared: is not an error, but rather a popular metric to measure the performance of your regression model. It represents how close the data points are to the fitted regression line. The higher the R-squared value, the better the model fits your data. The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse).
-$$ \begin{align} R2&=1-\frac{\text{sum squared regression (SSR)}}{\text{total sum of squares (SST)}},\\ &=1-\frac{\sum({y_i}-\hat{y_i})^2}{\sum(y_i-\bar{y})^2}. \end{align} $$
 
 <div id="Reference">
     <h1>Reference</h1>
