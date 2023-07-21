@@ -46,25 +46,7 @@ The Black-Scholes model makes several assumptions:
 
 The Black-Scholes model calculates the price of a European call or put option based on several variables: the current price of the underlying asset (S), the strike price of the option (K), the time to expiration (T), the risk-free interest rate (r), and the volatility of the underlying asset (σ). The model provides a formula that gives the theoretical option price based on these inputs.
 
-The formula for the price of a European call option according to the Black-Scholes model is:
 
-$$
- V = S \cdot N(d1) - K \cdot e^{(-r \ \cdot \ T)} \cdot N(d2)
-$$
-
-Where:
-
-* V is the price of the call option,
-* S is the current price of the underlying asset,
-* N() represents the cumulative standard normal distribution,
-* d1 and d2 are calculated as follows:
- $$ d1= \frac{\ln\left(\frac{S}{K}\right) + \left(r + \frac{\sigma^2}{2}\right) \cdot T}{\sigma \cdot \sqrt{T}} \\$$
- 
-$$ d2 = d_1 - \sigma \cdot \sqrt{T}  $$
-* K is the strike price of the option,
-* r is the risk-free interest rate,
-* T is the time to expiration of the option (measured in years), and
-* σ is the volatility of the underlying asset.
 
 <h2>Implied volatility </h2>
 
@@ -88,88 +70,8 @@ The main features of the Heston model include:
 2. Volatility mean-reversion: The volatility process tends to revert to a long-term average level.
 3. Volatility smile: The model is able to capture the characteristic smile-shaped volatility curve observed in the market, where the implied volatility of options varies with the strike price.
 
-<h4> Heston’s Stochastic Volatility Model under real world probability measure </h4>
-
-$$ \large dS_t = r S_t dt + \sqrt{v_t} S_t dW^\mathbb{P}_{1,t} $$
-$$\large dv_t = \kappa (\theta – v_t)dt + \sigma \sqrt{v_t} dW^\mathbb{P}_{2,t} $$
-$$\large \rho dt = dW^\mathbb{P}_{2,t} dW^\mathbb{P}_{2,t}
-$$
 
 
-<h4> Using standard arbitrage arguments we arrive at Garman’s partial differential equation: </h4>
-
-$\large \frac{\delta V}{\delta t} + \frac{S^2 v}{2}\frac{\delta^2 V}{\delta S^2} + rS\frac{\delta V}{\delta S} – rV + \kappa(\theta-v)\frac{\delta V}{\delta v} + \frac{\sigma^2 v}{2}\frac{\delta^2 V}{\delta v^2} + \rho \sigma Sv \frac{\delta^2 V}{\delta S \delta v} = 0$
-
-Notation:
-
-* $S_t$ Equity spot price, financial index
-* $v_t$ Variance
-* C  European call option price
-* K  Strike price
-* $W_{1,2}$ Standard Brownian movements.
-* r  Interest rate
-* $\kappa$ Mean reversion rate
-* $\theta$ Long run variance
-* $v_0$ Initial variance
-* $\sigma$ Volatility of variance
-* $\rho$ Correlation parameter
-* t Current date
-* T  Maturity date.
-<h2>Fourier-Cosine method </h2>
-
-$$
-v\left(\mathbf{x}, t_0, u_0\right) \approx \mathbf{K} e^{-r \Delta t} \cdot \operatorname{Re}\left\{{\sum_{k=0}^{N-1} }^{\prime} \varphi_{h e s}\left(\frac{k \pi}{b-a} ; u_0\right) U_k \cdot e^{i k \pi \frac{\mathbf{x}-n}{b-a}}\right\} .
-$$
-
-The characteristic function of the log-asset price, φ_hes (ω;u_0 ), reads
-
-$$
-\begin{aligned}
-\varphi_{h e s}\left(\omega ; u_0\right)= & \exp \left(i \omega \mu \Delta t+\frac{u_0}{\eta^2}\left(\frac{1-e^{-D \Delta t}}{1-G e^{-D \Delta t}}\right)(\lambda-i \rho \eta \omega-D)\right) \\
-& \cdot \exp \left(\frac{\lambda \bar{u}}{\eta^2}\left(\Delta t(\lambda-i \rho \eta \omega-D)-2 \log \left(\frac{1-G e^{-D \Delta t}}{1-G}\right)\right)\right),
-\end{aligned}
-$$
-with
-$$
-D=\sqrt{(\lambda-i \rho \eta \omega)^2+\left(\omega^2+i \omega\right) \eta^2} \text  { and }   G=\frac{\lambda-i \rho \eta \omega-D}{\lambda-i \rho \eta \omega+D} .
-$$
-
-$$
-U_k= \begin{cases}\frac{2}{b-a}\left(\chi_k(0, b)-\psi_k(0, b)\right) & \text { for a call, } \\ \frac{2}{b-a}\left(-\chi_k(a, 0)+\psi_k(a, 0)\right) & \text { for a put. }\end{cases}
-$$
-
-$$
-\begin{aligned}
-& \chi_k(c, d):=\frac{1}{1+\left(\frac{k \pi}{b-a}\right)^2}\left[\cos \left(k \pi \frac{d-a}{b-a}\right) e^d-\cos \left(k \pi \frac{c-a}{b-a}\right) e^c\right. \\
-& \left.+\frac{k \pi}{b-a} \sin \left(k \pi \frac{d-a}{b-a}\right) e^d-\frac{k \pi}{b-a} \sin \left(k \pi \frac{c-a}{b-a}\right) e^c\right] \\
-
-& \psi_k(c, d):= \begin{cases}{\left[\sin \left(k \pi \frac{d-a}{b-a}\right)-\sin \left(k \pi \frac{c-a}{b-a}\right)\right] \frac{b-a}{k \pi},} & k \neq 0, \\
-(d-c), & k=0 .\end{cases} \\
-&
-\end{aligned}
-$$
-How to determine the interval [a, b] is as follows,
-$$ \begin{align*}
-[a, b] = [ c_1 - L\sqrt{\left|c_2 \right|}, c_1 + L\sqrt{\left|c_2 \right|} ]
-\end{align*}
-$$
-$$
-\begin{align*}
- c_1 &= r\tau + (1 - \exp{(-\kappa  \tau)}) \frac{(\theta - v_0)}{2\kappa} - 0.5\theta\tau
-\end{align*}
-$$
-$$
-\begin{align*}
-c_2&= \frac{1}{(8\kappa^3)}  \Bigg[ \sigma\tau\kappa\exp({-\kappa\tau})(v_0-\theta)(8\kappa\rho - 4\sigma)\
-& +\kappa\rho\sigma(1-\exp({-\kappa\tau}))(16\theta - 8v_0)\
-& +2\theta\kappa\tau(-4\kappa*\rho\sigma+\sigma^2 + 4\kappa^2)\
-&+\sigma^2((\theta-2v_0)\exp({-2\kappa\tau})+\theta(6\exp({-\kappa\tau})-7)+2v_0)\
-&+8\kappa^2(v_0-\theta)(1-\exp({-\kappa\tau})) \Bigg]
-\end{align*}
-$$
-
-This characteristic function is uniquely specified, since we take $\sqrt{(x+y i)}$ such that its real part is nonnegative, and we restrict the complex logarithm to its principal branch. In this case the resulting characteristic function is the correct one for all complex $\omega$ in the strip of analycity of the characteristic function.
-<br>where Σ' indicates that the first term in the summation is weighted by one-half.
 <div id="Artificial Neural Network (ANN)">
     <h1>Artificial Neural Network (ANN)</h1>
 </div>
