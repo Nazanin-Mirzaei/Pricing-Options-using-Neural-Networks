@@ -1,0 +1,44 @@
+# Tools
+import numpy as np
+import pandas as pd
+import pickle
+import warnings
+from scipy.stats import norm
+
+# Generate random samples for input parameters
+
+np.random.seed(42)
+num_samples = 1000000
+
+# Define the ranges for input parameters
+
+param_range = {
+    'Sk': [0.5, 1.5],
+    'r': [0.03, 0.08],
+    'T': [0.3, 0.95],
+    'sigma': [0.02, 0.9]
+}
+
+# Generate random samples within the specified ranges
+Sk = np.random.uniform(*param_range['Sk'], num_samples)
+r = np.random.uniform(*param_range['r'], num_samples)
+T = np.random.uniform(*param_range['T'], num_samples)
+sigma = np.random.uniform(*param_range['sigma'], num_samples)
+
+warnings.filterwarnings('ignore')
+
+# Black-Scholes formula for generating data
+
+def black_scholes(Sk, r, T, sigma):
+    d1 = (np.log(Sk) + (r + sigma**2 / 2) * T) / (sigma * np.sqrt(T))
+    d2 = d1 - sigma * np.sqrt(T)
+    call_price = Sk * norm.cdf(d1) - np.exp(-r * T) * norm.cdf(d2)
+    return call_price
+
+option_prices = black_scholes(Sk, r, T, sigma)
+
+# Create a DataFrame with input parameters and option prices
+df = pd.DataFrame({'Sk': Sk, 'r': r, 'T': T, 'sigma': sigma, 'Price': option_prices})
+
+with open('df_{}.pickle'.format(len(df)), 'wb') as f:
+  pickle.dump(df, f)
